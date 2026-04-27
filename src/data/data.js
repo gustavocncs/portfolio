@@ -16,7 +16,7 @@ export const profile = {
 }
 
 export const stats = [
-  { num: '6',  label: 'Projetos no portfólio', highlight: true },
+  { num: '6+',  label: 'Projetos no portfólio', highlight: true },
   { num: '8+', label: 'Tecnologias dominadas' },
 ]
 
