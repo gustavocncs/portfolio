@@ -1,21 +1,49 @@
 import { useState } from 'react'
+import emailjs from '@emailjs/browser'
 import { profile } from '../data/data'
 import { GithubIcon, LinkedinIcon, InstagramIcon } from './Icons'
 import styles from './Contato.module.css'
 
+const SERVICE_ID  = 'service_mbda17g'
+const TEMPLATE_ID = 'template_7sm305m'
+const PUBLIC_KEY  = 'UygTGH_AFPzO-DMlt'
+
 export default function Contato() {
-  const [sent, setSent] = useState(false)
-  const [form, setForm] = useState({ nome: '', email: '', mensagem: '' })
+  const [sent, setSent]       = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError]     = useState(false)
+  const [form, setForm]       = useState({ nome: '', email: '', mensagem: '' })
 
   function handleChange(e) {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
-    setSent(true)
-    setForm({ nome: '', email: '', mensagem: '' })
-    setTimeout(() => setSent(false), 3000)
+    setLoading(true)
+    setError(false)
+
+    try {
+      await emailjs.send(
+        SERVICE_ID,
+        TEMPLATE_ID,
+        {
+          from_name: form.nome,
+          from_email: form.email,
+          message: form.mensagem,
+        },
+        PUBLIC_KEY
+      )
+      setSent(true)
+      setForm({ nome: '', email: '', mensagem: '' })
+      setTimeout(() => setSent(false), 4000)
+    } catch (err) {
+      console.error('EmailJS error:', err)
+      setError(true)
+      setTimeout(() => setError(false), 4000)
+    } finally {
+      setLoading(false)
+    }
   }
 
   const socials = [
@@ -23,6 +51,13 @@ export default function Contato() {
     { label: 'GitHub',    href: profile.socials.github,    Icon: GithubIcon    },
     { label: 'Instagram', href: profile.socials.instagram, Icon: InstagramIcon },
   ]
+
+  const btnLabel = () => {
+    if (loading) return 'Enviando...'
+    if (sent)    return '✓ Mensagem enviada!'
+    if (error)   return '✗ Erro ao enviar. Tente novamente.'
+    return 'Enviar mensagem →'
+  }
 
   return (
     <section className={styles.contato} id="contato">
@@ -82,9 +117,10 @@ export default function Contato() {
             </div>
             <button
               type="submit"
-              className={`${styles.btn} ${sent ? styles.sent : ''}`}
+              disabled={loading || sent}
+              className={`${styles.btn} ${sent ? styles.sent : ''} ${error ? styles.error : ''}`}
             >
-              {sent ? '✓ Mensagem enviada!' : 'Enviar mensagem →'}
+              {btnLabel()}
             </button>
           </form>
 
@@ -93,3 +129,4 @@ export default function Contato() {
     </section>
   )
 }
+
