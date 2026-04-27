@@ -6,7 +6,7 @@ Portfólio pessoal desenvolvido com **React + Vite**. Design clean e profissiona
 ![Vite](https://img.shields.io/badge/Vite-5-646CFF?logo=vite)
 ![CSS Modules](https://img.shields.io/badge/CSS_Modules-✓-blue)
 
-🔗 **[Ver online →](https://seudominio.com)**
+🔗 **[Ver online →](https://portfolio-hazel-ten-ym311zz0b8.vercel.app/)**
 
 ---
 
@@ -25,8 +25,8 @@ Portfólio pessoal desenvolvido com **React + Vite**. Design clean e profissiona
 - React 18 + Vite 5
 - CSS Modules
 - Hooks: useState, useEffect, useRef, custom `useInView`
-- Intersection Observer API (animações no scroll)
-- Google Fonts (Sora + JetBrains Mono)
+- Intersection Observer API 
+- Google Fonts
 
 ---
 
@@ -67,37 +67,7 @@ src/
 ├── App.jsx
 ├── main.jsx
 └── index.css
-```
 
-## ✏️ Como personalizar
-
-Edite o arquivo `src/data/data.js` — ele centraliza **todas** as informações do portfólio:
-- Nome, cargo, localização
-- Links das redes sociais
-- Texto do "Sobre mim"
-- Hard e soft skills
-- Projetos
-
----
-
-## 🌐 Deploy
-
-### GitHub Pages
-```bash
-npm install --save-dev gh-pages
-# Adicione ao package.json: "homepage": "https://gustavocncs.github.io/portfolio"
-npm run build && npx gh-pages -d dist
-```
-
-### Netlify (recomendado)
-Conecte o repositório no [netlify.com](https://netlify.com) e configure:
-- Build command: `npm run build`
-- Publish directory: `dist`
-
-### Vercel
-```bash
-npm i -g vercel && vercel
-```
 
 ---
 
